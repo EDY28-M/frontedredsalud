@@ -1,42 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { getHomeData, type NoticiaPublica, type CampanaPublica } from '@/services/publicApi';
+import { imgSrc, withBasePath } from '@/lib/api';
 
 const carouselSlides = [
   // Imágenes locales en alta resolución (evita estirado y baja calidad)
-  '/hero/hero-1.jpg',
-  '/hero/hero-2.jpg',
-  '/hero/hero-3.jpg',
+  withBasePath('/hero/hero-1.jpg'),
+  withBasePath('/hero/hero-2.jpg'),
+  withBasePath('/hero/hero-3.jpg'),
 ];
 
 const accesosRapidos = [
-  { label: 'aplicación web', nombre: 'HISMINSA', href: 'https://websalud.minsa.gob.pe/hisminsa/', icono: '/accesos/hisminsa.png' },
-  { label: 'aplicación web', nombre: 'SIHCE', href: 'https://sihce.redsaludhuanuco.gob.pe/', icono: '/accesos/sihce.png' },
-  { label: 'referencias', nombre: 'REFCON', href: 'https://refcon.minsa.gob.pe/refconv02/', icono: '/accesos/refcon.png' },
-  { label: 'RENIEC', nombre: 'Sistema de Hechos Vitales', href: 'https://portalrcm.reniec.gob.pe/hechosvitales/Login.do', icono: '/accesos/reniec.avif' },
-  { label: 'página web', nombre: 'Promoción de la Salud', href: 'https://sites.google.com/view/promsaweb/inicio', icono: '/accesos/promsa.png' },
-  { label: 'Gob.pe', nombre: 'Denuncia actos de corrupción', href: 'https://denuncias.servicios.gob.pe/?gobpe_id=6188', icono: '/accesos/hand.svg' },
-  { label: 'Gob.pe', nombre: 'Libro de Reclamaciones', href: 'https://reclamos.servicios.gob.pe/?institution_id=67', icono: '/accesos/book.svg' },
-  { label: 'plataforma', nombre: 'Gob.pe', href: 'https://www.gob.pe/regionhuanuco-rshuanuco/', icono: '/accesos/gobpe.svg' },
-];
-
-const noticias = [
-  { titulo: 'Mg. Sergio Fernández asume dirección ejecutiva de la Red de Salud Leoncio Prado', fecha: '19 de febrero de 2026 - 12:27 p. m.', imagen: 'https://cdn.www.gob.pe/uploads/document/file/9473897/1356216-nuevo-director.JPG', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/noticias/1356216-mg-sergio-fernandez-asume-direccion-ejecutiva-de-la-red-de-salud-huanuco' },
-  { titulo: 'Entregan resoluciones de nombramiento a 76 profesionales de la salud', fecha: '18 de febrero de 2026 - 5:21 p. m.', imagen: 'https://cdn.www.gob.pe/uploads/document/file/9469968/1355842-ceremonia.jpg', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/noticias/1355842-entregan-resoluciones-de-nombramiento-a-76-profesionales-de-la-salud' },
-  { titulo: 'El Hospital Carlos Showing Ferrari ya es Unidad Ejecutora: Un paso histórico para la salud en Huánuco', fecha: '19 de enero de 2026 - 4:51 p. m.', imagen: 'https://cdn.www.gob.pe/uploads/document/file/9312610/1337254-entrega-de-resolucion.JPG', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/noticias/1337254-el-hospital-carlos-showing-ferrari-ya-es-unidad-ejecutora-un-paso-historico-para-la-salud-en-huanuco' },
-  { titulo: 'Red de Salud Leoncio Prado lidera comitiva regional en Encuentro Nacional de Municipios Saludables en Cajamarca', fecha: '21 de noviembre de 2025 - 5:28 p. m.', imagen: 'https://cdn.www.gob.pe/uploads/document/file/9035878/1294404-promsa.jpg', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/noticias/1294404-red-de-salud-huanuco-lidera-comitiva-regional-en-encuentro-nacional-de-municipios-saludables-en-cajamarca' },
-  { titulo: '138 equipos de cómputo son entregados a establecimientos de la Red de Salud Leoncio Prado', fecha: '20 de octubre de 2025 - 4:29 p. m.', imagen: 'https://cdn.www.gob.pe/uploads/document/file/8858061/1269035-entrega-de-equipos-de-computo.JPG', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/noticias/1269035-138-equipos-de-computo-son-entregados-a-establecimientos-de-la-red-de-salud-huanuco' },
-  { titulo: 'Amarilis celebró el Día Mundial de la Alimentación', fecha: '17 de octubre de 2025 - 12:51 p. m.', imagen: 'https://cdn.www.gob.pe/uploads/document/file/8846607/1266253-alimentacion-saludable.JPG', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/noticias/1266253-amarilis-celebro-el-dia-mundial-de-la-alimentacion' },
-];
-
-const boletines = [
-  { fecha: '2026-01-16', titulo: 'Boletín informativo N°1-2026', imagen: 'https://cdn.www.gob.pe/uploads/document/file/9311976/7634922-cover-sm-2.png?v=1768857440', href: '/boletines/20261' },
-];
-
-const campanas = [
-  { fecha: '26/04/2025 - 10/05/2025', titulo: 'Semana de Vacunación de las Américas 2025', href: '/campañas/semana-americas-2025', imagen: '/campañas/americas-logo.eewX5B-n.png' },
-  { fecha: '01/02/2025 - 30/06/2025', titulo: 'Campaña de vacunación VPH 2025', href: '/campañas/vph-2025', imagen: '/campañas/vph-logo.D9RncHjq.png' },
-  { fecha: '07/11/2024 - 27/11/2024', titulo: 'VANCAN 2024', href: '/campañas/vancan-2024', imagen: '/campañas/vancan-logo.Bt0jF98n.png' },
-  { fecha: '15/11/2024 - 30/11/2024', titulo: 'Barrido SPR y Antipolio 2024', href: '/campañas/barrido-spr-antipolio-2024', imagen: '/campañas/barrido-logo.DEU0hDbv.png' },
+  { label: 'aplicación web', nombre: 'HISMINSA', href: 'https://websalud.minsa.gob.pe/hisminsa/', icono: withBasePath('/accesos/hisminsa.png') },
+  { label: 'aplicación web', nombre: 'SIHCE', href: 'https://sihce.redsaludhuanuco.gob.pe/', icono: withBasePath('/accesos/sihce.png') },
+  { label: 'referencias', nombre: 'REFCON', href: 'https://refcon.minsa.gob.pe/refconv02/', icono: withBasePath('/accesos/refcon.png') },
+  { label: 'RENIEC', nombre: 'Sistema de Hechos Vitales', href: 'https://portalrcm.reniec.gob.pe/hechosvitales/Login.do', icono: withBasePath('/accesos/reniec.avif') },
+  { label: 'página web', nombre: 'Promoción de la Salud', href: 'https://sites.google.com/view/promsaweb/inicio', icono: withBasePath('/accesos/promsa.png') },
+  { label: 'Gob.pe', nombre: 'Denuncia actos de corrupción', href: 'https://denuncias.servicios.gob.pe/?gobpe_id=681', icono: withBasePath('/accesos/hand.svg') },
+  { label: 'Gob.pe', nombre: 'Libro de Reclamaciones', href: 'https://reclamos.servicios.gob.pe/?institution_id=67', icono: withBasePath('/accesos/book.svg') },
+  { label: 'plataforma', nombre: 'Gob.pe', href: 'https://www.gob.pe/regionhuanuco-rsleoncioprado', icono: withBasePath('/accesos/gobpe.svg') },
 ];
 
 const splideOptions = {
@@ -58,17 +40,40 @@ const splideOptions = {
 
 type SocialTab = 'facebook' | 'tiktok';
 
+type HomeData = {
+  noticias: NoticiaPublica[];
+  campanas: CampanaPublica[];
+};
+
+const initialHomeData: HomeData = {
+  noticias: [],
+  campanas: [],
+};
+
 export default function HomePage() {
   const [socialTab, setSocialTab] = useState<SocialTab>('facebook');
+  const [data, setData] = useState<HomeData>(initialHomeData);
+  const { noticias, campanas } = data;
+
+  useEffect(() => {
+    getHomeData()
+      .then((resp) => {
+        setData({
+          noticias: resp.noticias.filter((x) => x.activo).slice(0, 6),
+          campanas: resp.campanas.slice(0, 4),
+        });
+      })
+      .catch(() => { });
+  }, []);
 
   return (
     <>
       {/* Carousel */}
       <div className="pt-0 pb-1 sm:pb-2">
         <Splide options={splideOptions} className="splide-hero">
-          {carouselSlides.map((src, i) => (
-            <SplideSlide key={i}>
-              <img src={src} alt="Imagen hero" className="w-full h-[280px] sm:h-[340px] md:h-[400px] lg:h-[500px] object-cover" />
+          {carouselSlides.map((src) => (
+            <SplideSlide key={src}>
+              <img src={src} alt="Imagen hero" className="w-full h-[280px] sm:h-[340px] md:h-[400px] lg:h-[500px] object-contain bg-gray-100 dark:bg-gray-800" />
             </SplideSlide>
           ))}
         </Splide>
@@ -111,7 +116,7 @@ export default function HomePage() {
                 <div className="flex flex-wrap items-baseline justify-between gap-2 mb-3 sm:mb-4">
                   <h2 className="text-[#001f5b] font-bold text-xl sm:text-2xl">Noticias</h2>
                   <a
-                    href="https://www.gob.pe/institucion/regionhuanuco-rshuanuco/noticias"
+                    href="https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/noticias"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs sm:text-sm text-primary hover:underline"
@@ -121,15 +126,19 @@ export default function HomePage() {
                 </div>
                 <hr className="mb-3 sm:mb-4 border-gray-200 dark:border-gray-700" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {noticias.length === 0 && <p className="col-span-3 text-gray-400 text-sm text-center py-6">Cargando noticias...</p>}
                   {noticias.map((n) => (
-                    <a key={n.titulo} href={n.href} target="_blank" rel="noopener noreferrer" className="block group">
+                    <a key={n.id} href={n.linkExterno} target="_blank" rel="noopener noreferrer" className="block group">
                       <div className="border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow">
                         <div className="h-32 sm:h-40 overflow-hidden">
-                          <img src={n.imagen} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <img src={imgSrc(n.imagenUrl)} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         </div>
-                        <div className="p-2 sm:p-3">
-                          <p className="font-medium text-gray-900 dark:text-white group-hover:text-primary transition-colors line-clamp-2 text-xs sm:text-sm">{n.titulo}</p>
-                          <small className="text-gray-500 dark:text-gray-400 text-[10px] sm:text-xs">{n.fecha}</small>
+                        <div className="p-2 sm:p-3 flex flex-col justify-between" style={{ minHeight: '110px' }}>
+                          <div>
+                            <p className="font-medium text-gray-900 dark:text-white group-hover:text-primary transition-colors line-clamp-2 text-xs sm:text-sm">{n.titulo}</p>
+                            {n.descripcionCorta && <p className="text-gray-600 dark:text-gray-300 text-[11px] sm:text-xs line-clamp-2 mt-1.5 leading-snug">{n.descripcionCorta}</p>}
+                          </div>
+                          <small className="text-gray-500 dark:text-gray-400 text-[10px] sm:text-xs mt-3 block">{new Date(n.fechaPublicacion).toLocaleDateString('es-PE', { day: '2-digit', month: 'long', year: 'numeric' })}</small>
                         </div>
                       </div>
                     </a>
@@ -137,34 +146,8 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Boletines */}
-              <div>
-                <div className="mb-3 sm:mb-4">
-                  <h2 className="text-[#001f5b] font-bold text-xl sm:text-2xl">Boletines</h2>
-                </div>
-                <hr className="mb-3 sm:mb-4 border-t-2 border-dashed border-gray-300 dark:border-gray-600" />
-                <div className="grid grid-cols-1 max-w-2xl">
-                  {boletines.map((b) => {
-                    const parts = b.titulo.includes(' N°') ? b.titulo.split(/ N°/) : [b.titulo, ''];
-                    const tituloPrincipal = parts[0];
-                    const numero = parts[1] ? `N°${parts[1]}` : '';
-                    return (
-                      <a key={b.titulo} href={b.href} className="block group w-full">
-                        <div className="flex flex-col sm:flex-row border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-gray-800 w-full sm:w-fit">
-                          <div className="w-full sm:w-[45%] sm:max-w-[240px] flex-shrink-0 overflow-hidden aspect-[4/3] sm:aspect-auto sm:max-h-[320px]">
-                            <img src={b.imagen} alt="" className="w-full h-full object-cover object-top" />
-                          </div>
-                          <div className="p-3 sm:p-4 flex flex-col justify-center flex-shrink-0 sm:whitespace-nowrap min-w-0">
-                            <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-1">{b.fecha}</span>
-                            <p className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors leading-tight text-sm sm:text-base">{tituloPrincipal}</p>
-                            {numero && <p className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors text-xs sm:text-sm mt-0.5">{numero}</p>}
-                          </div>
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
-              </div>
+
+
 
               {/* Campañas */}
               <div>
@@ -172,16 +155,28 @@ export default function HomePage() {
                   <h2 className="text-[#001f5b] font-bold text-xl sm:text-2xl">Campañas</h2>
                 </div>
                 <hr className="mb-3 sm:mb-4 border-t-2 border-dashed border-gray-300 dark:border-gray-600" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {campanas.length === 0 && <p className="col-span-full text-gray-400 text-sm py-4">Cargando campañas...</p>}
                   {campanas.map((c) => (
-                    <a key={c.titulo} href={c.href} className="block group">
-                      <div className="flex flex-row p-2.5 sm:p-3 gap-2 sm:gap-3 border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-gray-800 min-h-[72px]">
-                        <div className="w-14 h-14 sm:w-20 sm:h-20 flex-shrink-0 overflow-hidden bg-primary/5">
-                          <img src={c.imagen} alt="" className="w-full h-full object-contain" />
-                        </div>
-                        <div className="min-w-0 flex-1 flex flex-col justify-center py-0.5">
-                          <small className="text-gray-500 dark:text-gray-400 block text-[10px] sm:text-xs">{c.fecha}</small>
-                          <p className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors text-xs sm:text-sm line-clamp-2">{c.titulo}</p>
+                    <a 
+                      key={c.id} 
+                      href={c.linkExterno || withBasePath(`/campañas/${c.slug}`)} 
+                      target={c.linkExterno ? "_blank" : undefined}
+                      rel={c.linkExterno ? "noopener noreferrer" : undefined}
+                      className="block group w-full"
+                    >
+                      <div className="flex flex-col border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow bg-white dark:bg-gray-800 w-full">
+                        {c.imagenUrl && (
+                          <div className="w-full h-56 sm:h-72 flex-shrink-0 overflow-hidden bg-primary/5">
+                            <img src={imgSrc(c.imagenUrl)} alt="" className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" />
+                          </div>
+                        )}
+                        <div className="p-3 sm:p-4 min-w-0 flex flex-col gap-1">
+                          <small className="text-gray-500 dark:text-gray-400 block text-[11px] sm:text-xs">
+                            {new Date(c.fechaInicio).toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: '2-digit' })} — {new Date(c.fechaFin).toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                          </small>
+                          <p className="font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors text-sm sm:text-base line-clamp-2">{c.titulo}</p>
+                          {c.descripcion && <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm mt-0.5 line-clamp-2 leading-relaxed">{c.descripcion}</p>}
                         </div>
                       </div>
                     </a>
@@ -201,35 +196,33 @@ export default function HomePage() {
                   <button
                     type="button"
                     onClick={() => setSocialTab('facebook')}
-                    className={`flex-1 py-3 text-sm font-medium transition-colors border-b-2 -mb-px min-h-[44px] touch-manipulation ${
-                      socialTab === 'facebook'
-                        ? 'border-primary text-primary'
-                        : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                    className={`flex-1 py-3 text-sm font-medium transition-colors border-b-2 -mb-px min-h-[44px] touch-manipulation ${socialTab === 'facebook'
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                      }`}
                   >
                     Facebook
                   </button>
                   <button
                     type="button"
                     onClick={() => setSocialTab('tiktok')}
-                    className={`flex-1 py-3 text-sm font-medium transition-colors border-b-2 -mb-px min-h-[44px] touch-manipulation ${
-                      socialTab === 'tiktok'
-                        ? 'border-primary text-primary'
-                        : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                    className={`flex-1 py-3 text-sm font-medium transition-colors border-b-2 -mb-px min-h-[44px] touch-manipulation ${socialTab === 'tiktok'
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                      }`}
                   >
                     TikTok
                   </button>
                 </div>
-                <div className="border border-t-0 border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-gray-800">
+                <div className="border border-t-0 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
                   {socialTab === 'facebook' && (
-                    <div className="h-[480px]">
+                    <div className="h-[580px]">
                       <iframe
-                        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FRed-de-Salud-Hu%C3%A1nuco-1716600175152136&tabs=timeline&width=320&height=600&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId=310122202434286"
+                        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fsaludleoncioprado&tabs=timeline&width=340&height=580&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true"
                         width="100%"
-                        height="100%"
-                        className="block w-full h-full min-h-0"
-                        style={{ border: 0, overflow: 'hidden' }}
+                        height="580"
+                        className="block w-full min-h-0"
+                        style={{ border: 0 }}
                         allowFullScreen
                         allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                         title="Facebook Red de Salud Leoncio Prado"
@@ -251,7 +244,7 @@ export default function HomePage() {
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
                   Síguenos en{' '}
-                  <a href="https://www.facebook.com/Red-de-Salud-Hu%C3%A1nuco-1716600175152136" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Facebook</a>
+                  <a href="https://www.facebook.com/saludleoncioprado" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Facebook</a>
                   {' · '}
                   <a href="https://www.tiktok.com/@reddesaludhuanuco" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">TikTok</a>
                 </p>
@@ -259,13 +252,13 @@ export default function HomePage() {
 
               {/* Vista desktop: ambos embeds apilados */}
               <div className="hidden lg:block space-y-4">
-                <div className="border border-gray-200 dark:border-gray-700 overflow-hidden h-[600px]">
+                <div className="border border-gray-200 dark:border-gray-700 h-[650px]">
                   <iframe
-                    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FRed-de-Salud-Hu%C3%A1nuco-1716600175152136&tabs=timeline&width=320&height=600&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId=310122202434286"
+                    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fsaludleoncioprado&tabs=timeline&width=340&height=650&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true"
                     width="100%"
                     height="100%"
                     className="block w-full h-full min-h-0"
-                    style={{ border: 0, overflow: 'hidden' }}
+                    style={{ border: 0 }}
                     allowFullScreen
                     allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                     title="Facebook Red de Salud Leoncio Prado"

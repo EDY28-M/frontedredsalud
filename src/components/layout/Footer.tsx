@@ -1,4 +1,5 @@
 import Icon from '../ui/Icon';
+import { withBasePath } from '@/lib/api';
 
 const enlacesAplicaciones = [
   { nombre: 'HSMNGA', href: 'https://websalud.minsa.gob.pe/hisminsa/' },
@@ -16,30 +17,28 @@ const enlacesSusalud = [
 
 const enlacesServidor = [
   { nombre: 'SGD - Sistema de Gestión Documental', href: 'http://digital.regionhuanuco.gob.pe/login' },
-  { nombre: 'Correo institucional', href: 'https://redsaludhuanuco.gob.pe:2096/?locale=es_es' },
+  { nombre: 'Correo institucional', href: 'https://webmail.redsaludleoncioprado.gob.pe/' },
   { nombre: 'Boleta Electronica', href: 'http://boletaselectronicas.minsa.gob.pe/boletas/consulta' },
   { nombre: 'INFOBRAS', href: 'https://digep.minsa.gob.pe/verificar.html' },
 ];
 
 export default function Footer() {
+  const footerBgColor = '#92DBFF';
+
   return (
     <footer className="mt-auto">
       {/* Imagen decorativa encima del pie de página */}
-      <div className="w-full overflow-hidden bg-beige-header dark:bg-beige-dark relative">
+      <div className="w-full overflow-hidden relative" style={{ backgroundColor: footerBgColor }}>
         <img
-          src="/Pie%20de%20pagina/line.Y4JZT7Bg.svg"
+          src={withBasePath('/Pie%20de%20pagina/line.Y4JZT7Bg.svg')}
           alt=""
           className="w-full h-auto block"
-          style={{ maxHeight: '16px', objectFit: 'cover' }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'rgba(245, 242, 235, 0.6)' }}
+          style={{ maxHeight: '22px', objectFit: 'cover' }}
         />
       </div>
 
       {/* Sección Enlaces de Interés */}
-      <div className="bg-beige-header dark:bg-beige-dark border-t border-secondary/30">
+      <div className="border-t border-secondary/30" style={{ backgroundColor: footerBgColor }}>
         <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 lg:py-10">
           <h2 className="font-display text-lg sm:text-xl font-bold text-black mb-4 sm:mb-6 lg:mb-8">
             Enlaces de Interés
@@ -113,21 +112,17 @@ export default function Footer() {
       </div>
 
       {/* Línea decorativa entre Enlaces y Copyright */}
-      <div className="w-full overflow-hidden bg-beige-header dark:bg-beige-dark relative">
+      <div className="w-full overflow-hidden relative" style={{ backgroundColor: footerBgColor }}>
         <img
-          src="/Pie%20de%20pagina/line.Y4JZT7Bg.svg"
+          src={withBasePath('/Pie%20de%20pagina/line.Y4JZT7Bg.svg')}
           alt=""
           className="w-full h-auto block"
-          style={{ maxHeight: '16px', objectFit: 'cover' }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'rgba(245, 242, 235, 0.6)' }}
+          style={{ maxHeight: '22px', objectFit: 'cover' }}
         />
       </div>
 
       {/* Barra inferior - Copyright, dirección y horario */}
-      <div className="bg-secondary/30 dark:bg-secondary/10 border-t border-secondary/40">
+      <div className="border-t border-secondary/40" style={{ backgroundColor: footerBgColor }}>
         <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex flex-col md:flex-row justify-between items-center gap-2 sm:gap-3 text-[11px] sm:text-xs text-black">
           <div className="text-center md:text-left space-y-0.5">
             <p className="font-semibold text-black">

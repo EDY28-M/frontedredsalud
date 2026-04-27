@@ -1,8 +1,10 @@
+import { withBasePath } from '@/lib/api';
+
 const COLORS = {
-  primary: '#8B7E66',
+  primary: '#92DBFF',
   secondary: '#D4AF37',
-  bgBeige: '#F0EAD6',
-  borderBeige: '#D8D0C0',
+  bgBeige: '#92DBFF',
+  borderBeige: '#92DBFF',
   surfaceIvory: 'rgba(255, 255, 240, 0.95)',
 };
 
@@ -166,13 +168,13 @@ export default function InstitucionalPage() {
             <div className="divide-y divide-gray-100">
               {[
                 { label: 'Organigrama', href: '/assets/pdf/rshco-organigrama.pdf' },
-                { label: 'Directorio de Funcionarios', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/funcionarios' },
-                { label: 'Instrumentos de Gestión', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/colecciones/38261-instrumentos-de-gestion' },
-                { label: 'Planes y Políticas', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/colecciones/38264-planes-y-politicas' },
+                { label: 'Directorio de Funcionarios', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/funcionarios' },
+                { label: 'Instrumentos de Gestión', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/colecciones/38261-instrumentos-de-gestion' },
+                { label: 'Planes y Políticas', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/colecciones/38264-planes-y-politicas' },
               ].map((link) => (
                 <a
                   key={link.label}
-                  href={link.href}
+                  href={withBasePath(link.href)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-5 text-slate-700 font-medium flex justify-between items-center group transition-colors"

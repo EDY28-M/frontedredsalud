@@ -1,15 +1,16 @@
 @import "tailwindcss";
 @import "@splidejs/splide/css";
 
+/* tailwindcss v4 theme */
 @theme {
   --color-primary: #005baa;
-  --color-secondary: #D4B996;
+  --color-secondary: #92DBFF;
   --color-background-light: #ffffff;
   --color-background-dark: #1a202c;
   --color-surface-light: #f8f9fa;
   --color-surface-dark: #2d3748;
-  --color-beige-header: #f5f2eb;
-  --color-beige-dark: #3c3830;
+  --color-beige-header: #92DBFF;
+  --color-beige-dark: #92DBFF;
 
   --font-display: "Inter", sans-serif;
   --font-body: "Inter", sans-serif;
@@ -56,18 +57,18 @@ body {
 
 /* ===== Splide overrides - tema beige ===== */
 .splide__arrow {
-  background: rgba(212, 185, 150, 0.9) !important;
+  background: rgba(146, 219, 255, 0.9) !important;
   opacity: 0.9;
   border-radius: 0 !important;
 }
 
 .splide__arrow:hover:not(:disabled) {
-  background: #D4B996 !important;
+  background: #92DBFF !important;
   opacity: 1;
 }
 
 .splide__arrow svg {
-  fill: #3c3830 !important;
+  fill: #005baa !important;
 }
 
 .splide__arrow:disabled {
@@ -75,22 +76,22 @@ body {
 }
 
 .splide__pagination__page {
-  background: rgba(212, 185, 150, 0.6) !important;
+  background: rgba(146, 219, 255, 0.6) !important;
   border-radius: 0 !important;
 }
 
 .splide__pagination__page.is-active {
-  background: #D4B996 !important;
+  background: #92DBFF !important;
   transform: scale(1.4);
 }
 
 .splide__pagination__page:hover {
-  background: #D4B996 !important;
+  background: #92DBFF !important;
   opacity: 0.9;
 }
 
 .splide__progress__bar {
-  background: rgba(212, 185, 150, 0.5) !important;
+  background: rgba(146, 219, 255, 0.5) !important;
 }
 
 /* ===== Tipografía tipo pag.css (Bootstrap) - con beige ===== */
@@ -193,11 +194,11 @@ body {
 .blockquote {
   margin-bottom: 1rem;
   font-size: 1.25rem;
-  border-left: 4px solid #D4B996;
+  border-left: 4px solid #92DBFF;
   padding-left: 1rem;
 }
 
-.blockquote > :last-child {
+.blockquote> :last-child {
   margin-bottom: 0;
 }
 
@@ -205,7 +206,7 @@ body {
   margin-top: -1rem;
   margin-bottom: 1rem;
   font-size: 0.875em;
-  color: #8b7355;
+  color: #92DBFF;
 }
 
 .blockquote-footer::before {
@@ -219,8 +220,8 @@ body {
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: #f5f2eb;
-  border: 1px solid #D4B996;
+  background-color: #92DBFF;
+  border: 1px solid #92DBFF;
   border-radius: 0;
   max-width: 100%;
   height: auto;
@@ -237,5 +238,5 @@ body {
 
 .figure-caption {
   font-size: 0.875em;
-  color: #8b7355;
+  color: #92DBFF;
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { withBasePath } from '@/lib/api';
 
 interface NavItem {
   label: string;
@@ -19,20 +20,23 @@ const navItems: NavDropdown[] = [
     items: [
       { label: '¿Qué hacemos?', href: '/institucional', icon: 'bi-building' },
       { label: 'Organigrama', href: '/assets/pdf/rshco-organigrama.pdf', icon: 'bi-diagram-3' },
-      { label: 'Directorio', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/funcionarios', icon: 'bi-person-add' },
-      { label: 'Instrumentos de Gestión', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/colecciones/38261-instrumentos-de-gestion' },
-      { label: 'Planes y Políticas', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/colecciones/38264-planes-y-politicas' },
-      { label: 'Plan Operativo Institucional (POI)', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/colecciones/38266-plan-operativo-institucional-poi' },
+      { label: 'Directorio', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/funcionarios', icon: 'bi-person-add' },
+      { label: 'Instrumentos de Gestión', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/colecciones/38261-instrumentos-de-gestion' },
+      { label: 'Planes y Políticas', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/colecciones/38264-planes-y-politicas' },
+      { label: 'Plan Operativo Institucional (POI)', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/colecciones/38266-plan-operativo-institucional-poi' },
+      { label: 'Portal Gob.pe', href: 'https://www.gob.pe/regionhuanuco-rsleoncioprado', icon: 'bi-globe' },
+      { label: 'Libro de Reclamaciones', href: 'https://reclamos.servicios.gob.pe/?institution_id=67', icon: 'bi-book' },
+      { label: 'Denuncias de Corrupción', href: 'https://denuncias.servicios.gob.pe/?gobpe_id=681', icon: 'bi-shield-exclamation' },
     ],
   },
   {
     label: 'Documentos',
     items: [
-      { label: 'Informes y Publicaciones', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/informes-publicaciones', icon: 'bi-files' },
-      { label: 'Normas y Documentos Legales', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/normas-legales', icon: 'bi-file-earmark-medical' },
-      { label: 'Cartera de Servicios', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/colecciones/27840-cartera-de-servicios' },
-      { label: 'Gestión de la Calidad en Salud', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/colecciones/39037-gestion-de-la-calidad-en-salud' },
-      { label: 'Cuadro Multianual de Necesidades', href: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/colecciones/43673-cuadro-multianual-de-necesidades' },
+      { label: 'Informes y Publicaciones', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/informes-publicaciones', icon: 'bi-files' },
+      { label: 'Normas y Documentos Legales', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/normas-legales', icon: 'bi-file-earmark-medical' },
+      { label: 'Cartera de Servicios', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/colecciones/27840-cartera-de-servicios' },
+      { label: 'Gestión de la Calidad en Salud', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/colecciones/39037-gestion-de-la-calidad-en-salud' },
+      { label: 'Cuadro Multianual de Necesidades', href: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/colecciones/43673-cuadro-multianual-de-necesidades' },
     ],
   },
   {
@@ -46,10 +50,10 @@ const navItems: NavDropdown[] = [
       { label: 'Microredes', href: 'https://www.gob.pe/52971-red-de-salud-huanuco-microrredes-de-salud', icon: 'bi-buildings' },
     ],
   },
-  { label: 'Convocatorias', to: '/convocatorias', items: [] },
+  { label: 'Convocatorias', to: 'https://convocatorias.redsaludleoncioprado.gob.pe/', items: [] },
   {
     label: 'Noticias',
-    to: 'https://www.gob.pe/institucion/regionhuanuco-rshuanuco/noticias',
+    to: 'https://www.gob.pe/institucion/regionhuanuco-rsleoncioprado/noticias',
     items: [],
   },
   {
@@ -77,7 +81,7 @@ export default function Header({ activePage }: { activePage?: string }) {
     <nav className="sticky top-0 z-50 shadow-md bg-white dark:bg-gray-900">
       <div className="container mx-auto px-3 sm:px-4 py-2 sm:py-3 flex flex-wrap justify-between items-center gap-2">
         <Link to="/" className="flex items-center group flex-shrink-0">
-          <img src="/logo_redlp.jpg" alt="Red de Salud Leoncio Prado" className="h-6 sm:h-7 w-auto max-h-10" />
+          <img src={withBasePath('/logo_redlp.jpg')} alt="Red de Salud Leoncio Prado" className="h-6 sm:h-7 w-auto max-h-10" />
         </Link>
 
         <button
@@ -134,17 +138,25 @@ export default function Header({ activePage }: { activePage?: string }) {
                     <ul className="lg:absolute lg:left-0 lg:top-full lg:min-w-[280px] lg:bg-white lg:dark:bg-gray-800 lg:shadow-lg lg:border lg:border-gray-100 lg:dark:border-gray-700 lg:opacity-0 lg:invisible lg:group-hover:opacity-100 lg:group-hover:visible transition-all lg:z-50 bg-gray-50 dark:bg-gray-800/50 pl-5 lg:pl-0">
                       {item.items.map((sub, i) => (
                         <li key={sub.label}>
+                          {(() => {
+                            const isExternalHref = sub.href?.startsWith('http');
+                            const resolvedHref = withBasePath(sub.href ?? '#');
+
+                            return (
                           <a
-                            href={sub.href}
-                            target={sub.href?.startsWith('http') ? '_blank' : undefined}
-                            rel={sub.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                            href={resolvedHref}
+                            target={isExternalHref ? '_blank' : undefined}
+                            rel={isExternalHref ? 'noopener noreferrer' : undefined}
                             className="flex items-center gap-2 px-4 py-3 lg:py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300 min-h-[44px] touch-manipulation"
                             onClick={() => setMobileOpen(false)}
                           >
                             {sub.icon && <i className={`${sub.icon} text-sm`} />}
                             {sub.label}
                           </a>
+                            );
+                          })()}
                           {i === 2 && item.label === 'Institucional' && <hr className="my-1 border-gray-200 dark:border-gray-600" />}
+                          {i === 5 && item.label === 'Institucional' && <hr className="my-1 border-gray-200 dark:border-gray-600" />}
                           {i === 2 && item.label === 'Documentos' && <hr className="my-1 border-gray-200 dark:border-gray-600" />}
                         </li>
                       ))}

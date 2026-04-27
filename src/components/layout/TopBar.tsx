@@ -5,7 +5,34 @@ export default function TopBar() {
         <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 text-gray-600 dark:text-gray-300">
           <a
             className="hover:text-primary flex items-center gap-1 transition-colors"
-            href="https://redsaludhuanuco.gob.pe:2096/?locale=es_es"
+            href="https://www.gob.pe/regionhuanuco-rsleoncioprado"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="bi bi-globe text-xs sm:text-sm" />
+            Portal Gob.pe
+          </a>
+          <a
+            className="hover:text-primary flex items-center gap-1 transition-colors"
+            href="https://denuncias.servicios.gob.pe/?gobpe_id=681"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="bi bi-shield-exclamation text-[13px]" />
+            Denuncias
+          </a>
+          <a
+            className="hover:text-primary flex items-center gap-1 transition-colors"
+            href="https://reclamos.servicios.gob.pe/?institution_id=67"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="bi bi-book text-[13px]" />
+            Reclamaciones
+          </a>
+          <a
+            className="hover:text-primary flex items-center gap-1 transition-colors"
+            href="https://webmail.redsaludleoncioprado.gob.pe/"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -14,7 +41,7 @@ export default function TopBar() {
           </a>
           <a
             className="hover:text-primary flex items-center gap-1 transition-colors"
-            href="https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=78975&id_tema=1&ver=D"
+            href="https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=18620"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -34,7 +61,7 @@ export default function TopBar() {
           </a>
           <a
             className="hover:text-primary flex items-center gap-1 transition-colors"
-            href="https://cdn.www.gob.pe/uploads/document/file/5634205/4990617-fut-actual.pdf?v=1704379075"
+            href="https://cdn.www.gob.pe/uploads/document/file/9716395/7947090-fut.pdf?v=1774963824"
             target="_blank"
             rel="noopener noreferrer"
           >

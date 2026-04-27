@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/layout';
 import {
   HomePage,
@@ -7,12 +7,11 @@ import {
   CampanaPage,
   AuditorioPage,
   ZoomPage,
-  BoletinesPage,
 } from '@/pages';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route
           path="/"
@@ -70,14 +69,7 @@ function App() {
             </Layout>
           }
         />
-        <Route
-          path="/boletines/:id"
-          element={
-            <Layout>
-              <BoletinesPage />
-            </Layout>
-          }
-        />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
